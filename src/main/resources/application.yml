@@ -1,0 +1,36 @@
+canal:
+  servers:
+    - server-address: localhost
+      port: 11111
+      username: ""
+      password: ""
+      destination: "localhost"
+      kafka-topics:
+        - topic: test1
+          subscribe: "test1\\..*"
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/test1?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+      username: root
+      password: 123456
+  kafka:
+    listener:
+      ack-mode: manual
+      type: single
+    consumer:
+      enable-auto-commit: false
+    producer:
+      retries: 5
+    bootstrap-servers: 172.16.17.112:9093
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    call-setters-on-nulls: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-aliases-package: org.lin.**.dto, org.lin.**.entity
